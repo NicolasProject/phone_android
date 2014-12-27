@@ -1,0 +1,55 @@
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   
+    tools:context="com.example.interface_vfinale.MainActivity1" 
+    android:background="@drawable/status_bar_background">
+
+    <TextView
+        android:id="@+id/Affarr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="@string/maintitre"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#0099CC" />
+
+    <Button
+        android:id="@+id/Button02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Button01"
+        android:layout_below="@+id/Button01"
+        android:layout_marginTop="40dp"
+        android:onClick="OnClickGPS"
+        android:text="@string/modegps"
+        android:color="#FF0000" />
+		
+
+   
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/Affarr"
+        android:layout_below="@+id/Affarr"
+        android:layout_marginTop="106dp"
+        android:onClick="OnClickAuto"
+        android:text="@string/modeauto" />
+
+    <Button
+        android:id="@+id/Button01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/button1"
+        android:layout_marginTop="40dp"
+        android:onClick="OnClickManu"
+        android:text="@string/modemanu" />
+
+</RelativeLayout>
