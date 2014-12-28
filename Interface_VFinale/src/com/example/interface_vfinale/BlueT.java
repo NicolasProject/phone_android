@@ -113,6 +113,7 @@ public class BlueT {
 		try	{
 			this.mOutStream = this.mSocket.getOutputStream(); //ouverture du flux de sortie
 			
+			strOrdre += '\0';
 			byte[] trame = strOrdre.getBytes();
 			
 			this.mOutStream.write(trame); //envoi de la trame via le flux de sortie

@@ -2,10 +2,6 @@ package com.example.interface_vfinale;
 
 import com.example.interface_vfinale.BlueT;
 
-
-
-
-
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -37,8 +33,8 @@ public class ModeManu extends Activity implements View.OnClickListener {
    public void onCreate(Bundle savedInstanceState)
    { 
 	   setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-       super.onCreate(savedInstanceState); 
-       setContentView(R.layout.activity_mode_manu); 
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_mode_manu);
        
        
        SeekBar Barre1 = (SeekBar)findViewById(R.id.seekBar1);
