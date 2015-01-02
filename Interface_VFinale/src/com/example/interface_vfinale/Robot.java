@@ -1,14 +1,35 @@
 package com.example.interface_vfinale;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
 
 
 public class Robot
 {
+	static public Handler m_handler = new Handler() { //refresh aff ou/et recup des données bt pour utilisation
+		public void handleMessage(Message msg)
+		{
+			String myString=(String) msg.obj;
+			//Log.i("TextView", myString);	
+			//if ( myString !=""){
+			   //TextView1.setText(myString);
+			   //Log.i("TextView", myString);	
+			//}
+		}		
+	};
+	
+	
 	public Robot(Activity myActivity)
 	{
-		this.mBluetooth= new BlueT(myActivity);
+		m_Bluetooth= new BlueT(myActivity, m_handler);
 	}
+	
+	public void connexion()
+	{
+		m_Bluetooth.connexion();
+	}
+	
 	
 	public void MoteurOn ()
 	{
@@ -41,7 +62,7 @@ public class Robot
 		// on pourrait ajouter un toast pour pimenter le tout, mais pas ici !! (ce serait trop fort)
 		// cette classe n'est pas censé le faire
 		// de plus il faudrait connaitre l'activité dans laquelle on le fait
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
 	}
 	
 	public void MoteurOnG()
@@ -56,7 +77,7 @@ public class Robot
 		if (!(bGauche))
 			trame += m_sep + m_false;
 		
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
 	}
 	
 	
@@ -72,7 +93,7 @@ public class Robot
 		if (!(bDroit))
 			trame += m_sep + m_false;
 		
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
 	}
 	
 	public void Vitesse (int iVitesse)
@@ -84,7 +105,7 @@ public class Robot
 	{
 		String trame = m_mv;
 		
-		if ((iVitesseG <= iMax) && (iVitesseG >= 0) && (iVitesseD <= iMax) && (iVitesseD >= 0))
+		if ((iVitesseG <= m_iVitesseMax) && (iVitesseG >= 0) && (iVitesseD <= m_iVitesseMax) && (iVitesseD >= 0))
 		{
 			trame += m_sep + String.valueOf(iVitesseG) + m_sep + String.valueOf(iVitesseD);
 		}
@@ -93,14 +114,14 @@ public class Robot
 			 assert(false) : "erreur de vitesse";
 		}
 		
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
 	}
 	
 	public void VitesseG (int iVitesse)
 	{
 		String trame = m_mvg;
 		
-		if ((iVitesse <= iMax) && (iVitesse >= 0))
+		if ((iVitesse <= m_iVitesseMax) && (iVitesse >= 0))
 		{
 			trame += m_sep + String.valueOf(iVitesse);
 		}
@@ -109,14 +130,14 @@ public class Robot
 			assert(false) : "erreur de vitesse";
 		}
 		
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
 	}
 	
 	public void VitesseD (int iVitesse)
 	{
 		String trame = m_mvd;
 		
-		if ((iVitesse <= iMax) && (iVitesse >= 0))
+		if ((iVitesse <= m_iVitesseMax) && (iVitesse >= 0))
 		{
 			trame += m_sep + String.valueOf(iVitesse);
 		}
@@ -125,7 +146,7 @@ public class Robot
 			assert(false) : "erreur de vitesse";
 		}
 		
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
 	}
 	
 	
@@ -157,7 +178,7 @@ public class Robot
 			}
 		}
 		
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
 	}
 	
 	public void MoteurAvantG()
@@ -172,7 +193,7 @@ public class Robot
 		if (!(bGauche))
 			trame += m_sep + m_false;
 		
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
 	}
 	
 	
@@ -188,7 +209,7 @@ public class Robot
 		if (!(bDroit))
 			trame += m_sep + m_false;
 		
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
 	}
 	
 	public void recevoirCaptIR ()
@@ -237,7 +258,7 @@ public class Robot
 			}
 		}
 		
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
 	}
 	
 	public void recevoirCaptIRArr()
@@ -252,7 +273,7 @@ public class Robot
 		if (!ir)
 			trame += m_sep + m_false;
 		
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
 	}
 	
 	public void recevoirCaptIRG()
@@ -267,7 +288,7 @@ public class Robot
 		if (!ir)
 			trame += m_sep + m_false;
 		
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
 	}
 	
 	public void recevoirCaptIRD()
@@ -282,7 +303,44 @@ public class Robot
 		if (!ir)
 			trame += m_sep + m_false;
 		
-		mBluetooth.envoi(trame);
+		m_Bluetooth.envoi(trame);
+	}
+	
+	
+	public void setCaptIRArr()
+	{
+		setCaptIRArr(true);
+	}
+	
+	public void setCaptIRArr(boolean capteur)
+	{
+		m_captIRArr = capteur;
+	}
+	
+	public void setCaptIRG()
+	{
+		setCaptIRG(true);
+	}
+	
+	public void setCaptIRG(boolean capteur)
+	{
+		m_captIRG = capteur;
+	}
+	
+	public void setCaptIRD()
+	{
+		setCaptIRD(true);
+	}
+	
+	public void setCaptIRD(boolean capteur)
+	{
+		m_captIRD = capteur;
+	}
+	
+	public void setDistance(int dst)
+	{
+		if (dst >= -1 && dst < 1000)
+			m_distance = dst;
 	}
 	
 	
@@ -315,9 +373,17 @@ public class Robot
 	
 	//private final static String m_fin = "\0";
 	
-	private final static int iMax = 10;
+	private final static int m_iVitesseMax = 10;
 	
-	private BlueT mBluetooth;
+	
+	private boolean m_captIRArr;
+	private boolean m_captIRG;
+	private boolean m_captIRD;
+	
+	private int m_distance;
+	
+	
+	private BlueT m_Bluetooth;
 }
 
 

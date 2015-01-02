@@ -5,6 +5,8 @@ import com.example.interface_vfinale.BlueT;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+//import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,18 +15,20 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class ModeManu extends Activity implements View.OnClickListener {
 
+public class ModeManu extends Activity implements View.OnClickListener
+{
 	
-	int iMotDroit=0;
-	int iMotGauche=0;
-	boolean bAvGauche;
-	boolean bAvDroit;
-	public  Button Connect=null;
-	public BlueT mBluetooth;
-	private Thread mThreadEnvoi = null;
-	public 	int miCpt=0;
-	public String mstrTrame = "";
+	private int iMotDroit = 0;
+	private int iMotGauche = 0;
+	private boolean bAvGauche = true;
+	private boolean bAvDroit = true;
+	private Button Connect = null;
+	private Robot m_robot;
+	//private BlueT mBluetooth;
+	//private Thread mThreadEnvoi = null;
+	//private	int miCpt = 0;
+	//private String mstrTrame = "";
 	
 	
 
@@ -35,6 +39,8 @@ public class ModeManu extends Activity implements View.OnClickListener {
 	   setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
        super.onCreate(savedInstanceState);
        setContentView(R.layout.activity_mode_manu);
+       
+       m_robot = new Robot(this);
        
        
        SeekBar Barre1 = (SeekBar)findViewById(R.id.seekBar1);
@@ -47,8 +53,10 @@ public class ModeManu extends Activity implements View.OnClickListener {
        
        this.Connect = (Button) findViewById(R.id.button1);
        this.Connect.setOnClickListener((OnClickListener) this);
-       mBluetooth= new BlueT(this);
-       this.mThreadEnvoi = new Thread(new Runnable()
+       
+       //mBluetooth= new BlueT(this, mhandler);
+       
+       /*this.mThreadEnvoi = new Thread(new Runnable()
        {
        @Override
    			public void run()
@@ -76,27 +84,27 @@ public class ModeManu extends Activity implements View.OnClickListener {
    				}
    			}
        });
-   		mThreadEnvoi.start();
+   		mThreadEnvoi.start();*/
        
      
        Barre1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
        {    	   
-		   @Override 
-		   public void onProgressChanged(SeekBar seekBar, int progress1, 
-		     boolean fromUser) 
+    	   @Override
+    	   public void onProgressChanged(SeekBar seekBar, int progress1, boolean fromUser) 
 		   { 
-		    // TODO Auto-generated method stub 
-			iMotGauche = progress1 - 10;
-			seekBarValue1.setText(String.valueOf(iMotGauche)); 		    
-		    if(iMotGauche<0)
-		    {
-		    	iMotGauche= -iMotGauche;
-		    	bAvGauche = false;
-		    }
-		    else  if(iMotGauche<0)
-		    {
-			    	bAvGauche = true;
-		    }
+    		   // TODO Auto-generated method stub 
+    		   iMotGauche = progress1 - 10;
+    		   seekBarValue1.setText(String.valueOf(iMotGauche));
+    		   
+    		   if(iMotGauche < 0)
+    		   {
+    			   iMotGauche = -iMotGauche;
+    			   bAvGauche = false;
+    		   }
+    		   else
+    		   {
+    			   bAvGauche = true;
+    		   }
 		   } 
 		
 		   @Override 
@@ -110,27 +118,27 @@ public class ModeManu extends Activity implements View.OnClickListener {
 		   { 
 		    // TODO Auto-generated method stub 
 		   } 
-       }); 
+       });
+       
        Barre2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
        { 
 
 		   @Override 
-		   public void onProgressChanged(SeekBar seekBar, int progress2, 
-		     boolean fromUser) 
-		   { 
-		    // TODO Auto-generated method stub		  
-		   iMotDroit = progress2 - 10;
-		   seekBarValue2.setText(String.valueOf(iMotDroit)); 
-		    
-		    if(iMotDroit<0)
-		    {
-		    	iMotDroit= -iMotDroit;
-		    	bAvDroit = false;
-		    }
-		    else  if(iMotDroit<0)
-		    {		    	
-			    	bAvDroit = true;			    
-		    }
+		   public void onProgressChanged(SeekBar seekBar, int progress2, boolean fromUser) 
+		   {
+			   // TODO Auto-generated method stub
+			   iMotDroit = progress2 - 10;
+			   seekBarValue2.setText(String.valueOf(iMotDroit));
+			   
+			   if(iMotDroit < 0)
+			   {
+				   iMotDroit= -iMotDroit;
+				   bAvDroit = false;
+			   }
+			   else
+			   {		    	
+			    	bAvDroit = true;
+			   }
 		   }
 		   
 		   @Override 
@@ -144,7 +152,8 @@ public class ModeManu extends Activity implements View.OnClickListener {
 		   { 
 		    // TODO Auto-generated method stub 
 		   } 		   
-       }); 	   
+       });
+       
    }
 
    @Override
@@ -166,7 +175,7 @@ public class ModeManu extends Activity implements View.OnClickListener {
 		    */
 		    //Bouton Connexion Bluetooth
 		    case R.id.button1:
-		    	this.mBluetooth.connexion();
+		    	this.m_robot.connexion();
 		    	
 		    break;
 		    

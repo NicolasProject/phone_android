@@ -1,6 +1,7 @@
 package com.example.interface_vfinale;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
@@ -9,6 +10,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.*;
 import android.content.DialogInterface;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,14 +38,96 @@ public class BlueT {
 	private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");  // voir profil spp
 	private BluetoothSocket mSocket;
 	private OutputStream mOutStream;
+	private InputStream mInStream;
 	
 	//int miDeviceDelected = 0;
 
+	// utilise pour la reception -----------------------
+	public Handler mHandler;
+	private Thread mThreadReception =null;	//variable de réception
+	private String mstrData;
+	private String m_strTramComplete;
 	
-	public BlueT(Activity Activity)
+	public String m_strRecu;
+	
+	int miDeviceDelected = 0;
+	byte mbBuffer[] = new byte[200]; // on prévoit grand
+	int iPos=0;
+	// -------------------------------------------------
+	
+	public BlueT(Activity Activity, Handler Handler)
 	{
 		this.mActivity = Activity;
+		this.mHandler = Handler;
+		m_strTramComplete = new String("");
+		m_strRecu = new String("");
 		this.Verif();
+		
+		mThreadReception = new Thread(new Runnable() { //création du thread de réception	
+			@Override
+			public void run()
+			{
+				int iPosCar;
+				boolean carNotFound = true;
+				
+				// TODO Auto-generated method stub
+				while(true)
+				{
+					//Log.i(TAG, "etat="+mbtActif);
+					if(mbtAdapt != null)
+					{   //Log.i(TAG, "etat="+mbtAdapt);
+						if(mbtAdapt.isEnabled())
+						{
+							mbtActif = true;
+							//Log.i(TAG, "etat="+mbtActif);
+						}
+						else
+						{
+							mbtActif = false;
+							//Log.i(TAG, "etat="+mbtActif);
+						}
+					}
+					
+					if(mbtConnected == true) // Recupère les données que si on est connecté
+					{
+						// on lit une trame --------------------------------------------------------
+						carNotFound = true;
+						
+						while(carNotFound)
+						{							
+							if ((iPosCar = m_strRecu.indexOf('\0')) != -1)
+							{
+								m_strTramComplete = m_strRecu.substring(0, iPosCar);
+								m_strRecu = m_strRecu.substring(iPosCar + 1);
+								carNotFound = false;
+						    }
+							else
+								m_strRecu += reception();
+						}
+						// ------------------------------------------------------------------------
+						
+						if (!m_strTramComplete.equals("")) { // envoi message si chaine non vide
+							Message msg = mHandler.obtainMessage();
+							msg.obj = m_strTramComplete;
+							mHandler.sendMessage(msg);
+							//Log.i("Recu", mstrRecu);
+						}
+						//else
+							//Log.i("mstrRecu", "vide");
+					}
+					try {
+						Thread.sleep(20, 0);
+						} 
+					catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						//Log.i("IT", "mstrRecu");
+					}
+				}
+			}
+		});
+		
+        mThreadReception.start(); //lancement thread
 	}
 	
 	public void Verif() // vérification de la présence du BT
@@ -61,7 +146,7 @@ public class BlueT {
 		this.Device_Connu(); //récupération des mDevices connus
 		AlertDialog.Builder adBuilder = new AlertDialog.Builder(mActivity);//fenêtre "pop up" des périph connus
 		adBuilder.setTitle("device");
-		//miDeviceDelected = mDeviceSelected;
+		miDeviceDelected = mDeviceSelected;
 		adBuilder.setSingleChoiceItems(mstrDeviceName, 0, new DialogInterface.OnClickListener() {			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -81,7 +166,8 @@ public class BlueT {
 		this.miBlc = mDevices.size(); // Récupération du nb de mDevices connus
 		this.mstrDeviceName = new String[this.miBlc]; //tableau pour l'affichage des mDevices dans le pop up de connexion
 		this.miBlc = 0;
-		for(BluetoothDevice dev : this.mDevices) {
+		for(BluetoothDevice dev : this.mDevices)
+		{
 			this.mstrDeviceName[this.miBlc] = dev.getName();
 			this.miBlc = this.miBlc + 1;
 		}
@@ -106,6 +192,7 @@ public class BlueT {
 			}
 		}
 	}
+	
 	public Boolean envoi(String strOrdre) // false -> erreur; true -> ok
 	{
 		Boolean bRet = false;
@@ -132,6 +219,36 @@ public class BlueT {
 			this.mbtConnected = false;
 		}		
 		return bRet;
+	}
+	
+	private String reception()
+	{
+		int iNbLu;
+		mstrData = new String("");
+		try
+		{
+			this.mInStream = this.mSocket.getInputStream();// mstrRecupération flux entrée
+			
+			if(this.mInStream.available() > 0 )
+			{
+				// On lit les données, iNbLu représente le nombre de bytes lu
+				iNbLu=mInStream.read(mbBuffer,iPos,20); // attention on ne reçoit pas forcément une trame complète
+				this.mstrData = new String(mbBuffer,0,iNbLu); //création d'une chaine de caractères grace au bytes mstrRecus
+			}
+		}
+		catch (Exception e)
+		{
+			Log.i(TAG, "erreur");
+			try {
+				mSocket.close();
+			} 
+			catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			this.mbtConnected = false;
+		}
+		return mstrData;
 	}
 }
 
