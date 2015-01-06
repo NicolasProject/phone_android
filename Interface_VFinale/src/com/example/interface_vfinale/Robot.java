@@ -3,6 +3,7 @@ package com.example.interface_vfinale;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
 
 
 public class Robot
@@ -16,12 +17,15 @@ public class Robot
 			   //TextView1.setText(myString);
 			   //Log.i("TextView", myString);
 			//}
+			
+			Toast.makeText(m_activity.getApplicationContext(), myString, Toast.LENGTH_SHORT).show();
 		}		
 	};
 	
 	
 	public Robot(Activity myActivity)
 	{
+		m_activity = myActivity;
 		m_Bluetooth= new BlueT(myActivity, m_handler);
 	}
 	
@@ -67,7 +71,7 @@ public class Robot
 	
 	public void moteurOnG()
 	{
-		MoteurOnG (true);
+		moteurOnG (true);
 	}
 	
 	public void moteurOnG (boolean bGauche)
@@ -111,7 +115,7 @@ public class Robot
 		}
 		else
 		{
-			 assert(false) : "erreur de vitesse";
+			 assert false : "speed error - in moteurVitesse(int, int) function";
 		}
 		
 		m_Bluetooth.envoi(trame);
@@ -127,7 +131,7 @@ public class Robot
 		}
 		else
 		{
-			assert(false) : "erreur de vitesse";
+			assert false : "speed error - in moteurVitesseG (int) function";
 		}
 		
 		m_Bluetooth.envoi(trame);
@@ -143,7 +147,7 @@ public class Robot
 		}
 		else
 		{
-			assert(false) : "erreur de vitesse";
+			assert false : "speed error - in moteurVitesseD (int) function";
 		}
 		
 		m_Bluetooth.envoi(trame);
@@ -306,6 +310,54 @@ public class Robot
 		m_Bluetooth.envoi(trame);
 	}
 	
+	public void recevoirDistance()
+	{
+		recevoirDistance(true);
+	}
+	
+	public void recevoirDistance(boolean recevoir)
+	{
+		String trame = m_rus;
+		
+		if (!recevoir)
+			trame += m_sep + m_false;
+		
+		m_Bluetooth.envoi(trame);
+	}
+	
+	public void setPosServomoteur(int angle)
+	{
+		if (angle >= 0 && angle <= 90)
+		{
+			String trame = m_psm + m_sep + Integer.toString(angle);
+			m_Bluetooth.envoi(trame);
+		}
+		else
+			assert false : "erreur d'angle de servomoteur - dans la fonction setPosServomoteur(int)";
+	}
+	
+	
+	public boolean getCaptIRArr()
+	{
+		return m_captIRArr;
+	}
+	
+	public boolean getCaptIRG()
+	{
+		return m_captIRG;
+	}
+	
+	public boolean getCaptIRD()
+	{
+		return m_captIRD;
+	}
+	
+	public int getDistance()
+	{
+		return m_distance;
+	}
+	
+	
 	
 	public void giveKeyTo(Communication obj)
 	{
@@ -380,6 +432,8 @@ public class Robot
 	
 	private final static String m_rus = "14";
 	
+	private final static String m_psm = "15";
+	
 	private final static String m_true  = "1";
 	private final static String m_false = "0";
 	
@@ -393,6 +447,8 @@ public class Robot
 	private boolean m_captIRD;
 	
 	private int m_distance;
+	
+	static private Activity m_activity;
 	
 	
 	private BlueT m_Bluetooth;

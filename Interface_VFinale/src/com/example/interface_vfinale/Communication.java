@@ -78,6 +78,11 @@ public class Communication
 		
 		trameReceive.getChars(0, trameReceive.length(), trameRecue, 0);
 		
+		for(int i = 0; i < 21; i++)
+		{
+			assert trameRecue[i] != '\0' : "carac fin chaine !!!!!!!!!";
+		}
+		
 
 		/*PRINTD("debut traitement trame");
 		PRINTD("f1");*/

@@ -25,6 +25,8 @@ public class ModeManu extends Activity implements View.OnClickListener
 	private boolean bAvDroit = true;
 	private Button Connect = null;
 	private Robot m_robot;
+	private boolean m_moteurAvantGOld;
+	private boolean m_moteurAvantDOld;
 	//private BlueT mBluetooth;
 	//private Thread mThreadEnvoi = null;
 	//private	int miCpt = 0;
@@ -41,6 +43,8 @@ public class ModeManu extends Activity implements View.OnClickListener
        setContentView(R.layout.activity_mode_manu);
        
        m_robot = new Robot(this);
+       m_moteurAvantGOld = true;
+       m_moteurAvantDOld = true;
        
        
        SeekBar Barre1 = (SeekBar)findViewById(R.id.seekBar1);
@@ -96,14 +100,27 @@ public class ModeManu extends Activity implements View.OnClickListener
     		   iMotGauche = progress1 - 10;
     		   seekBarValue1.setText(String.valueOf(iMotGauche));
     		   
-    		   if(iMotGauche < 0)
+    		   if (iMotGauche >= 0)
     		   {
-    			   iMotGauche = -iMotGauche;
-    			   bAvGauche = false;
+    			   if(!m_moteurAvantGOld)
+    			   {
+    				   m_robot.moteurAvantG();
+    				   m_moteurAvantGOld = true;
+    			   }
+    			   
+    			   m_robot.moteurVitesseG(iMotGauche);
+    			   //bAvGauche = false;
     		   }
     		   else
     		   {
-    			   bAvGauche = true;
+    			   if(m_moteurAvantGOld)
+    			   {
+    				   m_robot.moteurAvantG(false);
+    				   m_moteurAvantGOld = false;
+    			   }
+    			   
+    			   m_robot.moteurVitesseG(-iMotGauche);
+    			   //bAvGauche = true;
     		   }
 		   } 
 		
@@ -130,14 +147,27 @@ public class ModeManu extends Activity implements View.OnClickListener
 			   iMotDroit = progress2 - 10;
 			   seekBarValue2.setText(String.valueOf(iMotDroit));
 			   
-			   if(iMotDroit < 0)
+			   if(iMotDroit >= 0)
 			   {
-				   iMotDroit= -iMotDroit;
-				   bAvDroit = false;
+				   if(!m_moteurAvantDOld)
+    			   {
+    				   m_robot.moteurAvantD();
+    				   m_moteurAvantDOld = true;
+    			   }
+    			   
+    			   m_robot.moteurVitesseD(iMotDroit);
+				   //bAvDroit = false;
 			   }
 			   else
-			   {		    	
-			    	bAvDroit = true;
+			   {
+				   if(m_moteurAvantDOld)
+    			   {
+    				   m_robot.moteurAvantD(false);
+    				   m_moteurAvantDOld = false;
+    			   }
+    			   
+    			   m_robot.moteurVitesseD(-iMotDroit);
+			    	//bAvDroit = true;
 			   }
 		   }
 		   

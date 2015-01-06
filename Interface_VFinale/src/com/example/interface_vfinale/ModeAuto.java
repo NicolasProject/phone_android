@@ -33,7 +33,7 @@ public class ModeAuto extends Activity implements View.OnClickListener{
         
         this.Connect = (Button) findViewById(R.id.button1);
 	    this.Connect.setOnClickListener(this);
-	    mBluetooth= new BlueT(this);
+	    //mBluetooth= new BlueT(this); // -------------------------------- l'appeler correctement
 
     }
 
