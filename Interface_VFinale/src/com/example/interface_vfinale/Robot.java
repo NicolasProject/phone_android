@@ -11,10 +11,10 @@ public class Robot
 		public void handleMessage(Message msg)
 		{
 			String myString=(String) msg.obj;
-			//Log.i("TextView", myString);	
+			//Log.i("TextView", myString);
 			//if ( myString !=""){
 			   //TextView1.setText(myString);
-			   //Log.i("TextView", myString);	
+			   //Log.i("TextView", myString);
 			//}
 		}		
 	};
@@ -31,12 +31,12 @@ public class Robot
 	}
 	
 	
-	public void MoteurOn ()
+	public void moteurOn ()
 	{
-		MoteurOn (true, true);
+		moteurOn (true, true);
 	}
 	
-	public void MoteurOn (boolean bGauche, boolean bDroite)
+	public void moteurOn (boolean bGauche, boolean bDroite)
 	{
 		String trame = m_mo;
 		
@@ -65,12 +65,12 @@ public class Robot
 		m_Bluetooth.envoi(trame);
 	}
 	
-	public void MoteurOnG()
+	public void moteurOnG()
 	{
 		MoteurOnG (true);
 	}
 	
-	public void MoteurOnG (boolean bGauche)
+	public void moteurOnG (boolean bGauche)
 	{
 		String trame = m_mog;
 		
@@ -81,12 +81,12 @@ public class Robot
 	}
 	
 	
-	public void MoteurOnD()
+	public void moteurOnD()
 	{
-		MoteurOnD (true);
+		moteurOnD (true);
 	}
 	
-	public void MoteurOnD (boolean bDroit)
+	public void moteurOnD (boolean bDroit)
 	{
 		String trame = m_mod;
 		
@@ -96,12 +96,12 @@ public class Robot
 		m_Bluetooth.envoi(trame);
 	}
 	
-	public void Vitesse (int iVitesse)
+	public void moteurVitesse (int iVitesse)
 	{
-		Vitesse (iVitesse, iVitesse);
+		moteurVitesse (iVitesse, iVitesse);
 	}
 	
-	public void Vitesse (int iVitesseG, int iVitesseD)
+	public void moteurVitesse (int iVitesseG, int iVitesseD)
 	{
 		String trame = m_mv;
 		
@@ -117,7 +117,7 @@ public class Robot
 		m_Bluetooth.envoi(trame);
 	}
 	
-	public void VitesseG (int iVitesse)
+	public void moteurVitesseG (int iVitesse)
 	{
 		String trame = m_mvg;
 		
@@ -133,7 +133,7 @@ public class Robot
 		m_Bluetooth.envoi(trame);
 	}
 	
-	public void VitesseD (int iVitesse)
+	public void moteurVitesseD (int iVitesse)
 	{
 		String trame = m_mvd;
 		
@@ -150,12 +150,12 @@ public class Robot
 	}
 	
 	
-	public void MoteurAvant()
+	public void moteurAvant()
 	{
-		MoteurAvant (true, true);
+		moteurAvant (true, true);
 	}
 	
-	public void MoteurAvant (boolean bGauche, boolean bDroite)
+	public void moteurAvant (boolean bGauche, boolean bDroite)
 	{
 		String trame = m_ma;
 		
@@ -181,12 +181,12 @@ public class Robot
 		m_Bluetooth.envoi(trame);
 	}
 	
-	public void MoteurAvantG()
+	public void moteurAvantG()
 	{
-		MoteurAvantG (true);
+		moteurAvantG (true);
 	}
 	
-	public void MoteurAvantG (boolean bGauche)
+	public void moteurAvantG (boolean bGauche)
 	{
 		String trame = m_mag;
 		
@@ -197,12 +197,12 @@ public class Robot
 	}
 	
 	
-	public void MoteurAvantD()
+	public void moteurAvantD()
 	{
-		MoteurAvantD (true);
+		moteurAvantD (true);
 	}
 	
-	public void MoteurAvantD (boolean bDroit)
+	public void moteurAvantD (boolean bDroit)
 	{
 		String trame = m_mad;
 		
@@ -307,40 +307,52 @@ public class Robot
 	}
 	
 	
-	public void setCaptIRArr()
+	public void giveKeyTo(Communication obj)
 	{
-		setCaptIRArr(true);
+		obj.receiveKey(new PrivateMethodsFriends());
 	}
 	
-	public void setCaptIRArr(boolean capteur)
+	public class PrivateMethodsFriends
 	{
-		m_captIRArr = capteur;
-	}
-	
-	public void setCaptIRG()
-	{
-		setCaptIRG(true);
-	}
-	
-	public void setCaptIRG(boolean capteur)
-	{
-		m_captIRG = capteur;
-	}
-	
-	public void setCaptIRD()
-	{
-		setCaptIRD(true);
-	}
-	
-	public void setCaptIRD(boolean capteur)
-	{
-		m_captIRD = capteur;
-	}
-	
-	public void setDistance(int dst)
-	{
-		if (dst >= -1 && dst < 1000)
-			m_distance = dst;
+		private PrivateMethodsFriends()
+		{}
+		
+		
+		public void setCaptIRArr()
+		{
+			setCaptIRArr(true);
+		}
+		
+		public void setCaptIRArr(boolean capteur)
+		{
+			m_captIRArr = capteur;
+		}
+		
+		public void setCaptIRG()
+		{
+			setCaptIRG(true);
+		}
+		
+		public void setCaptIRG(boolean capteur)
+		{
+			m_captIRG = capteur;
+		}
+		
+		public void setCaptIRD()
+		{
+			setCaptIRD(true);
+		}
+		
+		public void setCaptIRD(boolean capteur)
+		{
+			m_captIRD = capteur;
+		}
+		
+		public void setDistance(int dst)
+		{
+			if (dst >= -1 && dst < 1000)
+				m_distance = dst;
+		}
 	}
 	
 	

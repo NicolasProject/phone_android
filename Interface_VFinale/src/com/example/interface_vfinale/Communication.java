@@ -15,11 +15,23 @@ public class Communication
 	private static final int ir2 = 2;
 	private static final int ir3 = 3;
 	private static final int us = 4;
+
 	
-	public Communication()
+	private Robot bot;
+	
+	private Robot.PrivateMethodsFriends robot;
+	
+	public Communication(Robot myBot)
 	{
-		
+		bot = myBot;
+		bot.giveKeyTo(this);
 	}
+	
+	public void receiveKey(Robot.PrivateMethodsFriends key)
+	{
+		this.robot = key;
+	}
+	
 	
 	private class Trame
 	{
@@ -142,7 +154,7 @@ public class Communication
 		return trameSeparee;
 	}
 
-	void dispatch(Robot robot, final Trame trameSeparee)
+	void dispatch(/*Robot robot, */final Trame trameSeparee)
 	{
 		//PRINTD("start dispatch1");
 		int cmd;
@@ -176,54 +188,57 @@ public class Communication
 		case ir1:
 			if (params[0] == m_paramVide)
 			{
-				robot.moteurOn();
-				PRINTD("at_10");
+				robot.setCaptIRArr();
+				//PRINTD("at_10");
 			}
 			else
 			{
-				robot.moteurOn(params[0], params[1]); // conversion implicite de int à bool
-				PRINTD("at_11");
+				robot.setCaptIRArr(params[0] != 0); // conversion de int à bool
+				//PRINTD("at_11");
 			}
 			break;
 			
-		
-		case MO:
-			// si on ne renseigne pas les parametres alors on appel la fonction sans les parametres (les moteurs se mettent en marche)
-			if (params[0] == PARAM_VIDE && params[1] == PARAM_VIDE)
+		case ir2:
+			if (params[0] == m_paramVide)
 			{
-				robot.moteurOn();
-				PRINTD("at_10");
+				robot.setCaptIRG();
+				//PRINTD("at_10");
 			}
 			else
 			{
-				robot.moteurOn(params[0], params[1]); // conversion implicite de int à bool
-				PRINTD("at_11");
+				robot.setCaptIRG(params[0] != 0); // conversion de int à bool
+				//PRINTD("at_11");
+			}
+			break;
+			
+		case ir3:
+			if (params[0] == m_paramVide)
+			{
+				robot.setCaptIRD();
+				//PRINTD("at_10");
+			}
+			else
+			{
+				robot.setCaptIRD(params[0] != 0); // conversion de int à bool
+				//PRINTD("at_11");
+			}
+			break;
+			
+		case us:
+			if (params[0] != m_paramVide)
+			{
+				robot.setDistance(params[0]);
+				//PRINTD("at_10");
+			}
+			else
+			{
+				assert false : "error send ultrasonor, parameter is empty - error in dispatch() function";
 			}
 			break;
 
-		case MOG:
-			if (params[0] == PARAM_VIDE)
-			{
-				robot.moteurOnG();
-				PRINTD("at_12");
-			}
-			else
-			{
-				robot.moteurOnG(params[0]);
-				PRINTD("bool convert :");
-				PRINTD((bool)params[0]);
-			}
-			break;
-
-		case MOD:
-			if (params[0] == PARAM_VIDE)
-				robot.moteurOnD();
-			else
-				robot.moteurOnD(params[0]);
-			break;
 
 		default:
-			//PRINTD("DEFAULT switch - error");
+			assert false : "DEFAULT switch - error in dispatch() function";
 			break;
 		}
 
