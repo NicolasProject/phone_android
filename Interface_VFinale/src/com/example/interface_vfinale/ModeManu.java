@@ -46,6 +46,9 @@ public class ModeManu extends Activity implements View.OnClickListener
        m_moteurAvantGOld = true;
        m_moteurAvantDOld = true;
        
+       m_robot.moteurVitesse(0); // on met la vitesse des moteurs a 0
+       m_robot.moteurOn(true, true); // on met en route les moteurs
+       
        
        SeekBar Barre1 = (SeekBar)findViewById(R.id.seekBar1);
        SeekBar Barre2 = (SeekBar)findViewById(R.id.seekBar2);
@@ -215,6 +218,7 @@ public class ModeManu extends Activity implements View.OnClickListener
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
+		m_robot.moteurOn(false, false);
 		super.onDestroy();
 		//mBluetooth.desactivation(); //désactivation complete du BT
 	}
