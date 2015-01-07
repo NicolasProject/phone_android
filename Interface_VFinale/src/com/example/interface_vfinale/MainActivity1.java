@@ -2,7 +2,10 @@ package com.example.interface_vfinale;
 
 
 
+import java.util.LinkedHashMap;
+
 import android.app.Activity;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -15,6 +18,8 @@ import android.widget.Toast;
 
 
 	public class MainActivity1 extends Activity {
+		
+		//private Robot m_robot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +27,7 @@ import android.widget.Toast;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity1);
        
-        
+        //m_robot = new Robot(this);
     }
 
 
@@ -42,7 +47,12 @@ import android.widget.Toast;
     public void OnClickManu(View view){
     	
     	Intent myIntentManu = new Intent(MainActivity1.this,ModeManu.class); // ceci crée l'objet activité basé sur la classe MainActivity2
-		startActivityForResult(myIntentManu,50);// attribue un n° à l'intent
+    	
+    	/*Bundle bundle = new Bundle();
+    	bundle.putSerializable("bundleobj", m_robot);
+    	myIntentManu.putExtras(bundle);*/
+
+    	startActivityForResult(myIntentManu,50);// attribue un n° à l'intent
     	
     }
     public void OnClickAuto(View view){

@@ -1,12 +1,14 @@
 package com.example.interface_vfinale;
 
+import java.io.Serializable;
+
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
 
-public class Robot
+public class Robot implements Serializable
 {
 	static public Handler m_handler = new Handler() { //refresh aff ou/et recup des données bt pour utilisation
 		public void handleMessage(Message msg)
@@ -27,6 +29,8 @@ public class Robot
 	{
 		m_activity = myActivity;
 		m_Bluetooth= new BlueT(myActivity, m_handler);
+		
+		//this.connexion();
 	}
 	
 	public void connexion()
@@ -405,6 +409,13 @@ public class Robot
 			if (dst >= -1 && dst < 1000)
 				m_distance = dst;
 		}
+	}
+	
+	
+	protected void finalize( ) throws Throwable
+	{
+		moteurOn(false, false);
+		super.finalize();
 	}
 	
 	

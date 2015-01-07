@@ -1,8 +1,10 @@
 package com.example.interface_vfinale;
 
+
 import com.example.interface_vfinale.BlueT;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 //import android.os.Handler;
@@ -25,8 +27,10 @@ public class ModeManu extends Activity implements View.OnClickListener
 	private boolean bAvDroit = true;
 	private Button Connect = null;
 	private Robot m_robot;
-	private boolean m_moteurAvantGOld;
-	private boolean m_moteurAvantDOld;
+	private boolean m_moteurAvantGOld = true;
+	private boolean m_moteurAvantDOld = true;
+	private boolean m_moteurOnG = false;
+	private boolean m_moteurOnD = false;
 	//private BlueT mBluetooth;
 	//private Thread mThreadEnvoi = null;
 	//private	int miCpt = 0;
@@ -42,12 +46,14 @@ public class ModeManu extends Activity implements View.OnClickListener
        super.onCreate(savedInstanceState);
        setContentView(R.layout.activity_mode_manu);
        
+       //Bundle bd = new Bundle();
+       //bd = getIntent().getExtras();
+       //m_robot = (Robot) bd.getSerializable("bundleobj");
+       
        m_robot = new Robot(this);
+       //m_robot = (Robot)intent.getSerializableExtra("robot_obj");
        m_moteurAvantGOld = true;
        m_moteurAvantDOld = true;
-       
-       m_robot.moteurVitesse(0); // on met la vitesse des moteurs a 0
-       m_robot.moteurOn(true, true); // on met en route les moteurs
        
        
        SeekBar Barre1 = (SeekBar)findViewById(R.id.seekBar1);
@@ -103,6 +109,9 @@ public class ModeManu extends Activity implements View.OnClickListener
     		   iMotGauche = progress1 - 10;
     		   seekBarValue1.setText(String.valueOf(iMotGauche));
     		   
+    		   if (!m_moteurOnG)
+    			   m_robot.moteurOnG();
+    		   
     		   if (iMotGauche >= 0)
     		   {
     			   if(!m_moteurAvantGOld)
@@ -149,6 +158,9 @@ public class ModeManu extends Activity implements View.OnClickListener
 			   // TODO Auto-generated method stub
 			   iMotDroit = progress2 - 10;
 			   seekBarValue2.setText(String.valueOf(iMotDroit));
+			   
+			   if (!m_moteurOnD)
+    			   m_robot.moteurOnD();
 			   
 			   if(iMotDroit >= 0)
 			   {
@@ -215,10 +227,10 @@ public class ModeManu extends Activity implements View.OnClickListener
 		    
 		 }
 	}
+   
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
-		m_robot.moteurOn(false, false);
 		super.onDestroy();
 		//mBluetooth.desactivation(); //désactivation complete du BT
 	}
