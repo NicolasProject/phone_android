@@ -38,6 +38,11 @@ public class Robot implements Serializable
 		m_Bluetooth.connexion();
 	}
 	
+	public boolean isConnected()
+	{
+		return m_Bluetooth.isConnected();
+	}
+	
 	
 	public void moteurOn ()
 	{
