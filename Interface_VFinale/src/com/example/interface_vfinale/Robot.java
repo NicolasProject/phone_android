@@ -21,7 +21,8 @@ public class Robot implements Serializable
 			//}
 			
 			Toast.makeText(m_activity.getApplicationContext(), myString, Toast.LENGTH_SHORT).show();
-		}		
+			m_com.traiteTrame(myString);
+		}
 	};
 	
 	
@@ -29,13 +30,21 @@ public class Robot implements Serializable
 	{
 		m_activity = myActivity;
 		m_Bluetooth= new BlueT(myActivity, m_handler);
+		m_com = new Communication(this, m_activity);
 		
 		//this.connexion();
 	}
 	
 	public void connexion()
 	{
-		m_Bluetooth.connexion();
+		if (!isConnected())
+		{
+			m_Bluetooth.connexion();
+		}
+		else
+		{
+			Toast.makeText(m_activity.getApplicationContext(), "Déjà connecté !", Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 	public boolean isConnected()
@@ -468,6 +477,7 @@ public class Robot implements Serializable
 	
 	
 	private BlueT m_Bluetooth;
+	static private Communication m_com;
 }
 
 

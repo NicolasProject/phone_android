@@ -1,5 +1,8 @@
 package com.example.interface_vfinale;
 
+import android.app.Activity;
+import android.widget.Toast;
+
 
 public class Communication
 {
@@ -8,23 +11,33 @@ public class Communication
 	private static final int m_tailleParamMax = 3;
 	private static final int m_tailleCmdMax = 2;
 	private static final int m_tailleTrameMax = 20;
-	private static final String m_cmdBlank = "  ";
-	private static final String m_paramBlank = "   ";
+	private static final String m_cmdBlank = "  \0";
+	private static final String m_paramBlank = "   \0";
 	private static final int m_paramVide = -1;
 	private static final int ir1 = 1;
 	private static final int ir2 = 2;
 	private static final int ir3 = 3;
 	private static final int us = 4;
 
+	private Trame m_trame;
 	
 	private Robot bot;
 	
 	private Robot.PrivateMethodsFriends robot;
 	
-	public Communication(Robot myBot)
+	private Activity actiASuppr;
+	public Communication(Robot myBot, Activity actiSuppr)
 	{
 		bot = myBot;
 		bot.giveKeyTo(this);
+		m_trame = new Trame();
+		actiASuppr = actiSuppr;
+	}
+	
+	public void traiteTrame(String trame)
+	{
+		m_trame = traitementRecep(trame);
+		dispatch(m_trame);
 	}
 	
 	public void receiveKey(Robot.PrivateMethodsFriends key)
@@ -64,7 +77,7 @@ public class Communication
 		char tabParam[][]; // taille des parametres max : 3
 	}
 	
-	public Trame traitementRecep(String trameReceive)
+	private Trame traitementRecep(String trameReceive)
 	{
 		Trame trameSeparee = new Trame();
 		
@@ -159,23 +172,35 @@ public class Communication
 		return trameSeparee;
 	}
 
-	void dispatch(/*Robot robot, */final Trame trameSeparee)
+	private void dispatch(/*Robot robot, */final Trame trameSeparee)
 	{
 		//PRINTD("start dispatch1");
 		int cmd;
 		int params[] = new int[m_nbrParamMax];
-
+		
+		//trameSeparee.commande[0] = ' '; //test du param vide fonctionne
+		String tmpStrCmd = new String(trameSeparee.commande);
+		String tmpStrParam;
+		
 		// convert to integer
-		if (trameSeparee.commande.equals(m_cmdBlank) == false)
-			cmd = Integer.parseInt(new String(trameSeparee.commande));
+		if (tmpStrCmd.compareTo(m_cmdBlank) != 0)
+			cmd = Integer.parseInt( tmpStrCmd.trim() );
 		else
 			cmd = m_paramVide;
 
 		for (int i = 0; i < m_nbrParamMax; i++)
 		{
 			// on test si on a pas renseigne le parametre alors on ne met pas 0 mais, on le met à PARAM_VIDE (-1)
-			if (trameSeparee.tabParam[i].equals(m_paramBlank) == false)
+			/*if (trameSeparee.tabParam[i].equals(m_paramBlank) == false)
 				params[i] = Integer.parseInt(new String(trameSeparee.tabParam[i]));
+			else
+				params[i] = m_paramVide;*/
+				
+			
+			tmpStrParam = new String(trameSeparee.tabParam[i]);
+				
+			if (tmpStrParam.compareTo(m_paramBlank) != 0)
+				params[i] = Integer.parseInt( tmpStrParam.trim() );
 			else
 				params[i] = m_paramVide;
 		}
