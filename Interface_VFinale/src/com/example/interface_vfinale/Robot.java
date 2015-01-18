@@ -20,7 +20,7 @@ public class Robot implements Serializable
 			   //Log.i("TextView", myString);
 			//}
 			
-			Toast.makeText(m_activity.getApplicationContext(), myString, Toast.LENGTH_SHORT).show();
+			//Toast.makeText(m_activity.getApplicationContext(), myString, Toast.LENGTH_SHORT).show();
 			m_com.traiteTrame(myString);
 		}
 	};
@@ -29,7 +29,7 @@ public class Robot implements Serializable
 	public Robot(Activity myActivity)
 	{
 		m_activity = myActivity;
-		m_Bluetooth= new BlueT(myActivity, m_handler);
+		m_Bluetooth= new BlueT(m_activity, m_handler);
 		m_com = new Communication(this, m_activity);
 		
 		//this.connexion();
@@ -41,14 +41,18 @@ public class Robot implements Serializable
 		{
 			m_Bluetooth.connexion();
 		}
-		else
+		/*else
+			Toast.makeText(m_activity.getApplicationContext(), "Déjà connecté !", Toast.LENGTH_SHORT).show();*/
+		else // la déconnection ne fonctionne pas tres bien : problemes, exceptions
 		{
-			Toast.makeText(m_activity.getApplicationContext(), "Déjà connecté !", Toast.LENGTH_SHORT).show();
+			m_Bluetooth.destructor();
+			Toast.makeText(m_activity.getApplicationContext(), "Déconnecté !", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
 	public boolean isConnected()
 	{
+		
 		return m_Bluetooth.isConnected();
 	}
 	
@@ -425,13 +429,11 @@ public class Robot implements Serializable
 		}
 	}
 	
-	
-	protected void finalize( ) throws Throwable
+	public void destructor()
 	{
-		moteurOn(false, false);
-		super.finalize();
+		m_Bluetooth.destructor();
+		//m_Bluetooth= new BlueT(m_activity, m_handler);
 	}
-	
 	
 	
 	//declaration des elements de la trame

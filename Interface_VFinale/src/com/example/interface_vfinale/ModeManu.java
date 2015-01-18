@@ -229,9 +229,11 @@ public class ModeManu extends Activity implements View.OnClickListener
 	}
    
 	@Override
-	protected void onDestroy() {
+	protected void onDestroy()
+	{
 		// TODO Auto-generated method stub
+		m_robot.destructor();
+		
 		super.onDestroy();
-		//mBluetooth.desactivation(); //désactivation complete du BT
 	}
 }

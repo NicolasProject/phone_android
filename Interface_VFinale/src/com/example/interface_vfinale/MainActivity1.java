@@ -77,4 +77,10 @@ import android.widget.Toast;
 		   Toast.makeText(getApplicationContext(), "Retour Menu", Toast.LENGTH_LONG).show();
 		    
 	   }
+ 	
+ 	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+	}
 }
