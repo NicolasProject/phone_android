@@ -9,6 +9,9 @@
         android:targetSdkVersion="19" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -37,11 +40,15 @@
             android:name=".ModeAuto"
             android:label="@string/title_activity_mode_auto"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-        </activity>
-        <activity
+        </activity><activity
             android:name=".ModeGPS"
             android:label="@string/title_activity_mode_gps"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name=".ModeServerCo"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="@string/title_activity_mode_server">
         </activity>
     </application>
 

@@ -28,19 +28,6 @@
         android:onClick="OnClickGPS"
         android:text="@string/modegps"
         android:color="#FF0000" />
-		
-
-   
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/Affarr"
-        android:layout_below="@+id/Affarr"
-        android:layout_marginTop="106dp"
-        android:onClick="OnClickAuto"
-        android:text="@string/modeauto" />
 
     <Button
         android:id="@+id/Button01"
@@ -51,5 +38,25 @@
         android:layout_marginTop="40dp"
         android:onClick="OnClickManu"
         android:text="@string/modemanu" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/Affarr"
+        android:layout_below="@+id/Affarr"
+        android:layout_marginTop="74dp"
+        android:onClick="OnClickAuto"
+        android:text="@string/modeauto" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/Button01"
+        android:layout_below="@+id/Button02"
+        android:layout_marginTop="44dp"
+        android:onClick="OnClickServer"
+        android:text="@string/modeServer" />
 
 </RelativeLayout>

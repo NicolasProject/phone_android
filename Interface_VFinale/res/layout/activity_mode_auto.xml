@@ -21,95 +21,23 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#0099CC" />
 
-    <TextView
-        android:id="@+id/textCaptUltra"
+    <Button
+        android:id="@+id/buttonDemarre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textCaptAv1"
+        android:layout_below="@+id/button1"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="22dp"
-        android:text="@string/captultra"
-        android:textColor="#0099CC" />
-
-    <TextView
-        android:id="@+id/Affavg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/Affavd"
-        android:layout_alignBottom="@+id/Affavd"
-        android:layout_alignLeft="@+id/textCaptAv1"
-        android:layout_alignRight="@+id/textCaptAv1"
-        android:text="@string/nbDef"
-        android:textColor="#660000" />
-
-    <TextView
-        android:id="@+id/Affarr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/Affultras"
-        android:layout_below="@+id/textCaptAv3"
-        android:layout_marginTop="14dp"
-        android:text="@string/nbDef"
-        android:textColor="#660000" />
-
-    <TextView
-        android:id="@+id/textCaptAv2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textCaptAv1"
-        android:layout_alignBottom="@+id/textCaptAv1"
-        android:layout_alignParentRight="true"
-        android:text="@string/captavdroit"
-        android:textColor="#0099CC" />
-
-    <TextView
-        android:id="@+id/textCaptAv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/Affultras"
-        android:layout_marginTop="40dp"
-        android:text="@string/captavg"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#0099CC" />
+        android:layout_marginTop="46dp"
+        android:text="@string/debut" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textCaptUltra"
+        android:layout_below="@+id/textTitre"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="49dp"
+        android:layout_marginTop="76dp"
         android:text="@string/connexion"
         android:textColor="#FFFFFF" />
-
-    <TextView
-        android:id="@+id/Affavd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textCaptAv2"
-        android:layout_marginTop="16dp"
-        android:text="@string/nbDef"
-        android:textColor="#660000" />
-
-    <TextView
-        android:id="@+id/textCaptAv3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Affavg"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="47dp"
-        android:text="@string/captarriere"
-        android:textColor="#0099CC" />
-
-    <TextView
-        android:id="@+id/Affultras"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/nbDef"
-        android:textColor="#660000" />
 
 </RelativeLayout>

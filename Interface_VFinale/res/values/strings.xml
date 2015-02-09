@@ -20,5 +20,11 @@
     <string name="captultra">Capteur Ultrasons</string>
     <string name="captavdroit">Capteur Avant Droit</string>
     <string name="captarriere">Capteur Arriere</string>
+    <string name="modeServer">Mode Serveur</string>
+    <string name="title_activity_mode_server">Mode Serveur</string>
+    <string name="debut">Démarrer</string>
+    <string name="mMot">Stop</string>
+    <string name="m_latitudeDest">0</string>
+    <string name="m_longitudeDest">0</string>
 
 </resources>

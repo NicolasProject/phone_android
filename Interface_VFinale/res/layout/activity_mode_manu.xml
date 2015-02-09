@@ -53,6 +53,16 @@
         android:layout_alignRight="@+id/seekBar2"
         android:text="@string/nbDef" 
         android:textColor="#FFFFFF"/>
+    
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        android:onClick="onAffiche"
+        android:text="Affiche" />
 
     <TextView
         android:id="@+id/Affarr"

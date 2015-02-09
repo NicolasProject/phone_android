@@ -1,8 +1,12 @@
 package com.example.interface_vfinale;
 
 
-
 import java.util.LinkedHashMap;
+
+import com.example.interface_vfinale.ModeAuto;
+import com.example.interface_vfinale.ModeGPS;
+import com.example.interface_vfinale.ModeManu;
+import com.example.interface_vfinale.ModeServerCo;
 
 import android.app.Activity;
 import android.content.DialogInterface.OnClickListener;
@@ -66,7 +70,13 @@ import android.widget.Toast;
  		Intent myIntentGPS = new Intent(MainActivity1.this,ModeGPS.class); // ceci crée l'objet activité basé sur la classe MainActivity2
 		startActivityForResult(myIntentGPS,52);// attribue un n° à l'intent
     	
+ 	}
  	
+ 	public void OnClickServer(View view){
+ 		
+ 		Intent myIntentServer = new Intent(MainActivity1.this,ModeServerCo.class); // ceci crée l'objet activité basé sur la classe MainActivity2
+		startActivityForResult(myIntentServer,53);// attribue un n° à l'intent
+    	
  	}
  	
  	@Override
